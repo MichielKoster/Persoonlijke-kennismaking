@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kennismaking met Michiel · CTMH</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange:   #eb7e13;
+    --brown:    #8c6848;
+    --blue-lt:  #7a98ad;
+    --blue-sl:  #68749c;
+    --dark:     #2a2218;
+    --dark-mid: #3d3228;
+    --off-white:#faf7f3;
+    --pale:     #f3ede4;
+    --border:   #ddd3c5;
+    --muted:    #7a6a58;
+    --text:     #2a2218;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--off-white);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -60px; top: 0; bottom: 0;
+    width: 120px;
+    background: var(--dark);
+    clip-path: polygon(0 0, 0% 100%, 100% 50%);
+    z-index: 2;
+  }
+
+  .logo-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; }
+  .logo-box {
+    background: var(--orange);
+    color: white;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+  .logo-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue-lt);
+    opacity: 0.8;
+  }
+
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--orange); }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 5vw, 66px);
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  .hero-title em { font-style: italic; color: var(--orange); }
+
+  .hero-sub { color: var(--blue-lt); font-size: 15px; max-width: 340px; line-height: 1.8; opacity: 0.85; }
+
+  .hero-right {
+    background: var(--off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px 80px 100px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .intro-card {
+    background: white;
+    border-radius: 2px;
+    padding: 48px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(42,34,24,0.10);
+    position: relative;
+  }
+  .intro-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--blue-sl));
+  }
+
+  .card-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .card-name { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 300; color: var(--dark); margin-bottom: 2px; }
+  .card-org { font-size: 13px; color: var(--orange); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 20px; }
+
+  .card-body {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 24px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .contact-item:hover { color: var(--orange); }
+  .contact-icon {
+    width: 28px; height: 28px;
+    background: var(--pale);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+
+  .scroll-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500;
+    color: var(--orange); text-decoration: none;
+    letter-spacing: 0.05em; transition: gap 0.2s;
+  }
+  .scroll-cta:hover { gap: 16px; }
+  .scroll-cta::after { content: '↓'; font-size: 16px; }
+
+  /* SECTIONS */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+  .section-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: clamp(30px, 4vw, 48px); font-weight: 300; color: var(--dark); line-height: 1.2; margin-bottom: 48px; }
+
+  /* QUESTIONS */
+  .questions-section { background: var(--dark); padding: 100px 0; }
+  .questions-section .section-title { color: white; }
+  .questions-section .section-eyebrow { color: var(--orange); }
+  .questions-grid { display: flex; flex-direction: column; gap: 28px; }
+
+  .question-block {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid var(--orange);
+    border-radius: 2px;
+    padding: 40px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .question-block:hover { background: rgba(255,255,255,0.07); }
+
+  .q-number {
+    font-family: 'Fraunces', serif; font-size: 56px; font-weight: 300;
+    color: rgba(255,255,255,0.04);
+    position: absolute; top: 16px; right: 28px; line-height: 1;
+  }
+  .q-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+  .q-text { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 300; color: white; margin-bottom: 12px; line-height: 1.4; }
+  .q-hint { font-size: 13px; color: rgba(122,152,173,0.7); margin-bottom: 24px; font-style: italic; }
+
+  textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 2px;
+    padding: 16px 20px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 300; line-height: 1.7;
+    resize: vertical; min-height: 120px;
+    transition: border-color 0.2s; outline: none;
+  }
+  textarea::placeholder { color: rgba(122,152,173,0.5); }
+  textarea:focus { border-color: var(--orange); }
+
+  /* AFSPRAAK */
+  .afspraak-section { padding: 100px 0; background: var(--pale); }
+  .afspraak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+
+  .choice-group {
+    background: white; border-radius: 2px; padding: 32px;
+    box-shadow: 0 4px 24px rgba(42,34,24,0.07);
+    border-top: 2px solid var(--brown);
+  }
+  .choice-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .choice-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 300; color: var(--dark); margin-bottom: 20px; }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer; padding: 10px 14px;
+    border-radius: 2px; border: 1px solid transparent;
+    transition: all 0.2s; font-size: 14px; color: var(--text);
+  }
+  .option:hover { border-color: var(--border); background: var(--off-white); }
+  .option input[type="radio"] {
+    appearance: none; width: 18px; height: 18px;
+    border: 1.5px solid var(--border); border-radius: 50%;
+    flex-shrink: 0; cursor: pointer; transition: border-color 0.2s;
+  }
+  .option input[type="radio"]:checked {
+    border-color: var(--orange); background: var(--orange);
+    box-shadow: inset 0 0 0 3px white;
+  }
+  .option input[type="radio"]:checked ~ span { color: var(--dark); font-weight: 500; }
+
+  .other-input {
+    background: var(--off-white); border: 1px solid var(--border);
+    border-radius: 2px; padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+    outline: none; transition: border-color 0.2s; width: 100%; margin-top: 8px;
+  }
+  .other-input:focus { border-color: var(--orange); }
+  .other-input::placeholder { color: var(--muted); }
+
+  .date-card {
+    background: white; border-radius: 2px; padding: 40px;
+    box-shadow: 0 4px 24px rgba(42,34,24,0.07);
+    border-top: 2px solid var(--blue-sl);
+  }
+  .date-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+  .date-option {
+    border: 1.5px solid var(--border); border-radius: 2px;
+    padding: 20px; cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .date-option:hover, .date-option.selected { border-color: var(--blue-lt); background: #f0f5f8; }
+  .date-option.selected::after {
+    content: '✓'; position: absolute; top: 10px; right: 12px;
+    color: var(--blue-sl); font-size: 13px; font-weight: 500;
+  }
+  .date-day { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 300; color: var(--dark); line-height: 1; margin-bottom: 4px; }
+  .date-info { font-size: 12px; color: var(--muted); }
+
+  /* SUBMIT */
+  .submit-section { padding: 80px 0 100px; background: var(--dark-mid); text-align: center; }
+  .submit-intro { font-family: 'Fraunces', serif; font-size: clamp(28px, 3vw, 40px); font-weight: 300; color: white; margin-bottom: 12px; line-height: 1.3; }
+  .submit-sub { font-size: 15px; color: var(--blue-lt); margin-bottom: 48px; opacity: 0.85; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--orange); color: white;
+    padding: 18px 44px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    letter-spacing: 0.05em; border: none; border-radius: 2px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-primary:hover { background: white; color: var(--dark); gap: 18px; }
+  .btn-primary::after { content: '→'; }
+
+  .success-msg {
+    display: none;
+    background: rgba(235,126,19,0.12); border: 1px solid rgba(235,126,19,0.35);
+    border-radius: 2px; padding: 24px 32px;
+    margin: 32px auto 0; color: white;
+    font-size: 15px; max-width: 520px; text-align: left; line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-left { display: flex; align-items: center; gap: 14px; }
+  .footer-brand { font-weight: 500; font-size: 13px; letter-spacing: 0.1em; color: white; background: var(--orange); padding: 4px 12px; border-radius: 2px; }
+  .footer-name { font-family: 'Fraunces', serif; font-size: 16px; color: var(--blue-lt); font-weight: 300; }
+  .footer-right { display: flex; align-items: center; gap: 20px; }
+  .footer-link { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+  .footer-link:hover { color: var(--orange); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 28px; }
+    .hero-left::after { display: none; }
+    .hero-right { padding: 48px 28px; }
+    .afspraak-grid { grid-template-columns: 1fr; }
+    .date-grid { grid-template-columns: repeat(2, 1fr); }
+    .container { padding: 0 24px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-left, .footer-right { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="logo-bar">
+      <span class="logo-box">CTMH</span>
+      <span class="logo-label">Interim &amp; Advies</span>
+    </div>
+    <div class="tag">Persoonlijke kennismaking</div>
+    <h1 class="hero-title">Laten we<br>elkaar <em>echt</em><br>leren kennen.</h1>
+    <p class="hero-sub">Geen standaard gesprek, maar een echte ontmoeting. Jij bepaalt waar en hoe — ik kom naar jou toe.</p>
+  </div>
+  <div class="hero-right">
+    <div class="intro-card">
+      <p class="card-label">Uitnodiging van</p>
+      <h2 class="card-name">Michiel</h2>
+      <p class="card-org">CTMH · Interim &amp; Advies</p>
+      <p class="card-body">Ik wil je graag beter leren kennen — wat je drijft, waar je ambities liggen en wat jij ziet bij CTMH. Neem rustig de tijd om deze pagina in te vullen voordat we elkaar spreken.</p>
+      <div class="contact-info">
+        <a class="contact-item" href="tel:0646702390"><span class="contact-icon">📞</span>06 46 70 23 90</a>
+        <a class="contact-item" href="mailto:michiel@ctmh.nl"><span class="contact-icon">✉️</span>michiel@ctmh.nl</a>
+        <a class="contact-item" href="https://www.ctmh.nl" target="_blank"><span class="contact-icon">🌐</span>www.ctmh.nl</a>
+      </div>
+      <a href="#afspraak" class="scroll-cta">Begin hier</a>
+    </div>
+  </div>
+</section>
+
+<section class="afspraak-section" id="afspraak">
+  <div class="container">
+    <p class="section-eyebrow reveal">De ontmoeting</p>
+    <h2 class="section-title reveal">Jij kiest,<br>ik kom naar jou toe.</h2>
+
+    <div class="afspraak-grid reveal">
+      <div class="choice-group">
+        <p class="choice-label">Waar spreken we af?</p>
+        <h3 class="choice-title">Kies een setting</h3>
+        <div class="options">
+          <label class="option"><input type="radio" name="locatie" value="Koffietentje / lunch"><span>☕ &nbsp;Koffietentje / lunch</span></label>
+          <label class="option"><input type="radio" name="locatie" value="Wandeling buiten"><span>🌿 &nbsp;Wandeling buiten</span></label>
+          <label class="option"><input type="radio" name="locatie" value="Op kantoor (CTMH)"><span>🏢 &nbsp;Op kantoor (CTMH)</span></label>
+          <label class="option"><input type="radio" name="locatie" value="Bij jou thuis"><span>🏠 &nbsp;Bij jou thuis</span></label>
+          <label class="option"><input type="radio" name="locatie" value="Bij jou op je opdracht"><span>💼 &nbsp;Bij jou op je opdracht</span></label>
+          <label class="option"><input type="radio" name="locatie" value="__anders__"><span>✨ &nbsp;Iets anders, namelijk…</span></label>
+          <input type="text" class="other-input" id="locatie-anders" placeholder="Jouw idee..." style="display:none;">
+        </div>
+      </div>
+
+      <div class="choice-group">
+        <p class="choice-label">Hoe ziet de activiteit eruit?</p>
+        <h3 class="choice-title">Kies een vorm</h3>
+        <div class="options">
+          <label class="option"><input type="radio" name="activiteit" value="Rustig gesprek" onchange="toggleActiviteitVeld()"><span>��� &nbsp;Rustig gesprek</span></label>
+          <label class="option"><input type="radio" name="activiteit" value="Wandelend praten" onchange="toggleActiviteitVeld()"><span>🚶 &nbsp;Wandelend praten</span></label>
+          <label class="option"><input type="radio" name="activiteit" value="Samen lunchen / dineren" onchange="toggleActiviteitVeld()"><span>🍽️ &nbsp;Samen lunchen / dineren</span></label>
+          <label class="option"><input type="radio" name="activiteit" value="Iets actiefs (sport, etc.)" onchange="toggleActiviteitVeld()"><span>⚡ &nbsp;Iets actiefs (sport, etc.)</span></label>
+          <label class="option"><input type="radio" name="activiteit" value="__anders__" onchange="toggleActiviteitVeld()"><span>🎯 &nbsp;Verras me, namelijk…</span></label>
+          <input type="text" class="other-input" id="activiteit-anders" placeholder="Jouw voorstel..." style="display:none;">
+        </div>
+        <div id="activiteit-detail" style="display:none; margin-top:16px;">
+          <p style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:8px;">Jouw voorkeur — waar en wat?</p>
+          <textarea id="activiteit-toelichting" placeholder="Geef aan wat jouw voorkeur heeft — bijv. 'Koffie bij Café X in Utrecht' of 'Wandeling in het park bij mij in de buurt'..." rows="3" style="background:var(--off-white); border:1px solid var(--border); color:var(--text);"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="date-card reveal">
+      <p class="choice-label">Wanneer schikt het jou?</p>
+      <h3 style="font-family:'Fraunces',serif;font-size:20px;color:var(--dark);margin-bottom:8px;font-weight:300;">Geef een voorkeur aan</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:24px;">Selecteer één of meerdere opties die voor jou uitkomen.</p>
+      <div class="date-grid">
+        <div class="date-option" onclick="toggleDate(this)" data-dag="Maandag ochtend"><div class="date-day">Ma</div><div class="date-info">Ochtend · 09:00–12:00</div></div>
+        <div class="date-option" onclick="toggleDate(this)" data-dag="Dinsdag middag"><div class="date-day">Di</div><div class="date-info">Middag · 12:00–17:00</div></div>
+        <div class="date-option" onclick="toggleDate(this)" data-dag="Woensdag ochtend"><div class="date-day">Wo</div><div class="date-info">Ochtend · 09:00–12:00</div></div>
+        <div class="date-option" onclick="toggleDate(this)" data-dag="Donderdag middag"><div class="date-day">Do</div><div class="date-info">Middag · 12:00–17:00</div></div>
+        <div class="date-option" onclick="toggleDate(this)" data-dag="Vrijdag ochtend"><div class="date-day">Vr</div><div class="date-info">Ochtend · 09:00–12:00</div></div>
+        <div class="date-option" onclick="toggleDate(this)" data-dag="Flexibel" style="border-style:dashed;"><div class="date-day" style="font-size:20px;color:var(--muted);">Flex</div><div class="date-info">Laat me verrassen</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Aanvullende opmerking</p>
+      <input type="text" id="timing-extra" class="other-input" placeholder="Bijv. 'liefst niet in de schoolvakanties' of 'pas na 10:00 uur'..." style="display:block;margin-top:0;">
+    </div>
+  </div>
+</section>
+
+<section class="questions-section" id="vragen">
+  <div class="container">
+    <p class="section-eyebrow reveal">Tot slot</p>
+    <h2 class="section-title reveal">Nog iets<br>meegeven?</h2>
+    <div class="questions-grid">
+      <div class="question-block reveal">
+        <div class="q-number">✦</div>
+        <p class="q-label">Vooraf meegeven</p>
+        <p class="q-text">Wat wil je me vooraf alvast meegeven?</p>
+        <p class="q-hint">Deel wat je wilt — een gedachte, verwachting, vraag of iets wat je bezighoudt.</p>
+        <textarea id="a1" placeholder="Deel hier wat je wilt meegeven..." rows="8"></textarea>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="submit-section">
+  <div class="container">
+    <p class="submit-intro reveal">Klaar voor een<br>goed gesprek?</p>
+    <p class="submit-sub reveal">Stuur je antwoorden op — ik kijk er naar uit je te ontmoeten.</p>
+    <button class="btn-primary reveal" id="submitBtn" onclick="handleSubmit()">Verstuur mijn antwoorden</button>
+    <div class="success-msg" id="successMsg" style="display:none;">
+      ✅ &nbsp;<strong>Verstuurd!</strong> Michiel ontvangt jouw antwoorden direct. Hij neemt contact op om een datum te prikken. Tot snel! 👋
+    </div>
+    <div id="errorMsg" style="display:none; background:rgba(220,80,80,0.15); border:1px solid rgba(220,80,80,0.4); border-radius:2px; padding:24px 32px; margin:24px auto 0; color:white; font-size:14px; max-width:520px; line-height:1.7;">
+      ❌ &nbsp;<strong>Verzenden mislukt.</strong> Probeer het opnieuw of mail direct naar <a href="mailto:michiel@ctmh.nl" style="color:var(--orange);">michiel@ctmh.nl</a>.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <span class="footer-brand">CTMH</span>
+    <span class="footer-name">Michiel</span>
+  </div>
+  <div class="footer-right">
+    <a class="footer-link" href="tel:0646702390">📞 06 46 70 23 90</a>
+    <a class="footer-link" href="mailto:michiel@ctmh.nl">✉️ michiel@ctmh.nl</a>
+    <a class="footer-link" href="https://www.ctmh.nl" target="_blank">🌐 ctmh.nl</a>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+
+  document.querySelectorAll('input[type="radio"]').forEach(r => {
+    r.addEventListener('change', () => {
+      if (r.name === 'locatie')
+        document.getElementById('locatie-anders').style.display = r.value === '__anders__' ? 'block' : 'none';
+    });
+  });
+
+  function toggleActiviteitVeld() {
+    var actRadio = document.querySelector('input[name="activiteit"]:checked');
+    var andersInput = document.getElementById('activiteit-anders');
+    var detailVeld = document.getElementById('activiteit-detail');
+    if (actRadio) {
+      andersInput.style.display = actRadio.value === '__anders__' ? 'block' : 'none';
+      detailVeld.style.display = 'block';
+    }
+  }
+
+  function toggleDate(el) { el.classList.toggle('selected'); }
+
+  function handleSubmit() {
+    var a1 = document.getElementById('a1').value || '(niet ingevuld)';
+
+    var locRadio = document.querySelector('input[name="locatie"]:checked');
+    var locatie = locRadio ? locRadio.value : '(niet ingevuld)';
+    if (locatie === '__anders__') {
+      locatie = document.getElementById('locatie-anders').value || '(eigen idee)';
+    }
+
+    var actRadio = document.querySelector('input[name="activiteit"]:checked');
+    var activiteit = actRadio ? actRadio.value : '(niet ingevuld)';
+    if (activiteit === '__anders__') {
+      activiteit = document.getElementById('activiteit-anders').value || '(eigen idee)';
+    }
+
+    var toelichting = document.getElementById('activiteit-toelichting').value || '';
+
+    var dagenEls = document.querySelectorAll('.date-option.selected');
+    var dagenArr = [];
+    for (var i = 0; i < dagenEls.length; i++) {
+      dagenArr.push(dagenEls[i].getAttribute('data-dag'));
+    }
+    var dagen = dagenArr.length > 0 ? dagenArr.join(', ') : '(geen voorkeur)';
+    var extra = document.getElementById('timing-extra').value || '—';
+
+    var btn = document.getElementById('submitBtn');
+    btn.innerHTML = 'Versturen…';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    btn.onclick = null;
+
+    emailjs.send('service_5pyeaun', 'template_j0h3a0e', {
+      vraag1: a1,
+      vraag2: '—',
+      vraag3: '—',
+      setting: locatie,
+      activiteit: activiteit + (toelichting ? ' — ' + toelichting : ''),
+      dagvoorkeur: dagen,
+      opmerking: extra
+    }).then(function() {
+      btn.innerHTML = '✓ Verstuurd';
+      btn.style.background = '#5a8a5a';
+      btn.style.opacity = '1';
+      document.getElementById('successMsg').style.display = 'block';
+      document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.querySelectorAll('textarea, input').forEach(function(el) { el.disabled = true; });
+      document.querySelectorAll('.date-option').forEach(function(el) { el.style.pointerEvents = 'none'; });
+    }, function(error) {
+      console.error('EmailJS fout:', JSON.stringify(error));
+      btn.innerHTML = 'Verstuur mijn antwoorden';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.onclick = handleSubmit;
+      var errDiv = document.getElementById('errorMsg');
+      errDiv.innerHTML = '❌ &nbsp;<strong>Verzenden mislukt.</strong> Fout: ' + (error.text || error.status || JSON.stringify(error)) + '. Probeer opnieuw of mail naar <a href="mailto:michiel@ctmh.nl" style="color:var(--orange);">michiel@ctmh.nl</a>.';
+      errDiv.style.display = 'block';
+      errDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+  window.onload = function() {
+    emailjs.init('Hv67s6WOJn7jkUfGU');
+  };
+</script>
+</body>
+</html>
