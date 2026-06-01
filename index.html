@@ -343,6 +343,10 @@
         <a class="contact-item" href="mailto:michiel@ctmh.nl"><span class="contact-icon">✉️</span>michiel@ctmh.nl</a>
         <a class="contact-item" href="https://www.ctmh.nl" target="_blank"><span class="contact-icon">🌐</span>www.ctmh.nl</a>
       </div>
+      <div style="margin-bottom:28px;">
+        <p style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Jouw naam</p>
+        <input type="text" id="naam" class="other-input" placeholder="Vul hier je naam in…" style="display:block; margin-top:0; font-size:15px; padding:14px 16px; border:1.5px solid var(--border);">
+      </div>
       <a href="#afspraak" class="scroll-cta">Begin hier</a>
     </div>
   </div>
@@ -372,7 +376,7 @@
         <p class="choice-label">Hoe ziet de activiteit eruit?</p>
         <h3 class="choice-title">Kies een vorm</h3>
         <div class="options">
-          <label class="option"><input type="radio" name="activiteit" value="Rustig gesprek" onchange="toggleActiviteitVeld()"><span>��� &nbsp;Rustig gesprek</span></label>
+          <label class="option"><input type="radio" name="activiteit" value="Rustig gesprek" onchange="toggleActiviteitVeld()"><span>💬 &nbsp;Rustig gesprek</span></label>
           <label class="option"><input type="radio" name="activiteit" value="Wandelend praten" onchange="toggleActiviteitVeld()"><span>🚶 &nbsp;Wandelend praten</span></label>
           <label class="option"><input type="radio" name="activiteit" value="Samen lunchen / dineren" onchange="toggleActiviteitVeld()"><span>🍽️ &nbsp;Samen lunchen / dineren</span></label>
           <label class="option"><input type="radio" name="activiteit" value="Iets actiefs (sport, etc.)" onchange="toggleActiviteitVeld()"><span>⚡ &nbsp;Iets actiefs (sport, etc.)</span></label>
@@ -478,7 +482,18 @@
   function toggleDate(el) { el.classList.toggle('selected'); }
 
   function handleSubmit() {
+    var naam = document.getElementById('naam').value.trim();
     var a1 = document.getElementById('a1').value || '(niet ingevuld)';
+
+    // Validatie naam
+    if (!naam) {
+      document.getElementById('naam').style.border = '1.5px solid var(--orange)';
+      document.getElementById('naam').placeholder = '⚠ Vul eerst je naam in…';
+      document.getElementById('naam').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      document.getElementById('naam').focus();
+      return;
+    }
+    document.getElementById('naam').style.border = '1.5px solid var(--border)';
 
     var locRadio = document.querySelector('input[name="locatie"]:checked');
     var locatie = locRadio ? locRadio.value : '(niet ingevuld)';
@@ -509,6 +524,7 @@
     btn.onclick = null;
 
     emailjs.send('service_5pyeaun', 'template_j0h3a0e', {
+      naam: naam,
       vraag1: a1,
       vraag2: '—',
       vraag3: '—',
